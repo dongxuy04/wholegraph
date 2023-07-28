@@ -652,7 +652,7 @@ void host_weighted_sample_without_replacement(
           }
         }
       };
-#if 1
+
       for (int j = 0; j < block_size; j++) {
         int local_gidx = gidx + j;
         PCGenerator rng(random_seed, (uint64_t)local_gidx, (uint64_t)0);
@@ -672,16 +672,7 @@ void host_weighted_sample_without_replacement(
           }
         }
       }
-#else
 
-      for (int j = 0; j < block_size; j++) {
-        int local_gidx = gidx + j;
-        PCGenerator rng(random_seed, (uint64_t)local_gidx, (uint64_t)0);
-        for (int id = j; id < neighbor_count; id += block_size) {
-          if (id < neighbor_count) { consume_fun(id, rng); }
-        }
-      }
-#endif
 
       for (int sample_id = 0; sample_id < max_sample_count; sample_id++) {
         output_dest_nodes_ptr[output_id + sample_id] = csr_col_ptr[start + small_heap.top().first];
