@@ -353,7 +353,7 @@ void BootstrapCommunicatorImpl::InitRank(int size, WmmpUniqueId unique_id, int r
   WM_CUDA_CHECK(cudaMalloc(&device_buffer_, kDeviceBufferSize));
   WM_CUDA_CHECK(cudaMallocHost(&host_send_buffer_, kHostBufferSizePerRank * size_));
   WM_CUDA_CHECK(cudaMallocHost(&host_recv_buffer_, kHostBufferSizePerRank * size_));
-  WM_CUDA_CHECK(cudaStreamCreate(&nccl_stream_));
+  WM_CUDA_CHECK(cudaStreamCreateWithFlags(&nccl_stream_, cudaStreamNonBlocking));
   WM_CUDA_CHECK(cudaEventCreate(&event_));
 
   if (size < 1 || rank < 0 || rank >= size) {
